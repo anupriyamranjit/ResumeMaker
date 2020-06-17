@@ -13,4 +13,4 @@ const projectSchema = new Schema ({
 // API Endpoints
 const Project = mongoose.model('Project', projectSchema)
 
-module.export = Project;
+module.exports = Project;

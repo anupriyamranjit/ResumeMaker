@@ -8,10 +8,10 @@ const experienceSchema = new Schema ({
 	firstLine:{type:String, required: true},
 	secondLine:{type:String, required: true},
 	thirdLine:{type:String, required:true}
-})
+});
 
 // API Endpoints
 
 const Experience = mongoose.model('Experience', experienceSchema)
 
-module.export = Experience;
+module.exports = Experience;
