@@ -1,10 +1,10 @@
 
 const router = require('express').Router();
-let Project = require('../model/project.model');
+let Projects = require('../model/projects.model');
 
 router.route('/').get((req,res)=>{
-	Project.find()
-	.then(project => res.json(project))
+	Projects.find()
+	.then(projects => res.json(projects))
 	.catch(err => res.status(400).json('Error: ' + err));
 });
 
@@ -13,38 +13,39 @@ router.route('/add').post((req,res) => {
 	const position = req.body.position;
 	const what = req.body.what;
 	const tools = req.body.tools;
+	const newProject = new Projects({name,position,what,tools});
 
 
 	newProject.save()
-	.then(() => res.json('Project added!!'))
+	.then(() => res.json('Projects added!!'))
 	.catch(err => res.status(400).json('Error: ' + err));
 });
 
 
 router.route('/:id').get((req,res) => {
-	Project.findById(req.params.id)
-	.then(Project => res.json(Project))
+	Projects.findById(req.params.id)
+	.then(Projects => res.json(Projects))
 	.catch(err => res.status(400).json('Error: ' + err));
 });
 
 
 router.route('/:id').delete((req,res) => {
-	Project.findByIdAndDelete(req.params.id)
-	.then(() => res.json('Project Deleted.'))
+	Projects.findByIdAndDelete(req.params.id)
+	.then(() => res.json('Projects Deleted.'))
 	.catch(err => res.status(400).json('Error: ' + err));
 });
 
 
 router.route('/update/:id').post((req,res) => {
-	Project.findById(req.params.id)
-	.then(Project => {
-		Project.name = req.body.name;
-		Project.position = req.body.position;
-		Project.what = req.body.what;
-		Project.tools = req.body.tools;
+	Projects.findById(req.params.id)
+	.then(Projects => {
+		Projects.name = req.body.name;
+		Projects.position = req.body.position;
+		Projects.what = req.body.what;
+		Projects.tools = req.body.tools;
 
-		Project.save()
-		.then(() => res.json('Project Updated'))
+		Projects.save()
+		.then(() => res.json('Projects Updated'))
 		.catch(err => res.status(400).json(`Error ${err}`));
 
 	}

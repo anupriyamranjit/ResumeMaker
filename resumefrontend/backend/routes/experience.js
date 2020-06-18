@@ -14,6 +14,7 @@ router.route('/add').post((req,res) => {
 	const firstLine = req.body.firstLine;
 	const secondLine = req.body.secondLine;
 	const thirdLine = req.body.thirdLine;
+	const newExperience = new Experience({name,position,firstLine,secondLine,thirdLine});
 
 
 	newExperience.save()
