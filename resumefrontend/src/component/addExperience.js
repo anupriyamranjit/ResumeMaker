@@ -124,10 +124,12 @@ export default function Project(){
               <Button style={{margin:5}} color="primary" variant="contained" type="submit">
                Save
             </Button>
+            <br />
             </Box>
             </Grid>
 
             </form>
+            <br />
 			</CardContent>
 		</Card>
 		)

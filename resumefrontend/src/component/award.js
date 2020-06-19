@@ -101,6 +101,7 @@ export default function Project(){
             </Grid>
 
             </form>
+            <br />
 			</CardContent>
 		</Card>
 		)
