@@ -5,6 +5,8 @@ import Award from './component/addAward'
 import Experience from './component/addExperience'
 import {BrowserRouter as Router, Route} from "react-router-dom";
 import AllProject from './component/allProjects';
+import AllAward from './component/allAwards';
+import AllExperience from './component/allExperiences';
 function App() {
   return (
     <Router>
@@ -14,6 +16,8 @@ function App() {
       <Route path="/addaward" exact component={Award} />
       <Route path="/addexperience" exact component={Experience} />
     <Route path="/project" exact component={AllProject}/>
+        <Route path="/award" exact component ={AllAward}/>
+        <Route path="/experience" exact component ={AllExperience}/>
     </Router>
 
   );

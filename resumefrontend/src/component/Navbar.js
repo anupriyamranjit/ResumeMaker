@@ -11,13 +11,20 @@ export default function Navbar() {
                 <Link to="/" className="nav-link">Resume</Link>
                 </li>
                 <li className="nav-item">
-                <Link to="/project" className="nav-link">Add Project</Link>
+                <Link to="/addproject" className="nav-link">Add Project</Link>
                 </li>
                 <li className="nav-item">
-                <Link to="/experience" className="nav-link">Add Experience</Link>
+                <Link to="/addexperience" className="nav-link">Add Experience</Link>
                 </li>
                 <li className="nav-item">
-                <Link to="/award" className="nav-link">Add Award</Link>
+                <Link to="/addaward" className="nav-link">Add Award</Link>
+                </li>
+                <li>
+                <Link to="/project" className="nav-link">All Projects</Link>
+                </li>
+                
+                <li>
+                <Link to="/award" className="nav-link">All Awards</Link>
                 </li>
             </ul>
             </div>
