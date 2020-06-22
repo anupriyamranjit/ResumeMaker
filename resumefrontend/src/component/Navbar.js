@@ -26,6 +26,10 @@ export default function Navbar() {
                 <li>
                 <Link to="/award" className="nav-link">All Awards</Link>
                 </li>
+
+                <li>
+                <Link to="/experience" className="nav-link">All Experience</Link>
+                </li>
             </ul>
             </div>
         </nav>
