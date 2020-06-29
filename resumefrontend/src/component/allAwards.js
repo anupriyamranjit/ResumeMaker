@@ -22,12 +22,16 @@ import axios from 'axios'
 
 
 function ItemCard(project){
+	const handleDelete =  (id) => {
+		alert(id)
+	}
     return(
     <Card>
         <CardContent>
             <h2>{project.project.name}</h2>
             <h6>{project.project.what}</h6>
             <h6>{project.project.year}</h6>
+	    <Button style={{color: "red"}} onClick={() => handleDelete(project.project._id)}>Delete </Button>
         </CardContent>
     </Card>
     )
@@ -48,9 +52,6 @@ export default function AllAwards(){
             .catch(err => {
                 console.log(err);
             });
-            
-        
-
     },[])
     return(
         <Card>
