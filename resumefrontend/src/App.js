@@ -7,6 +7,7 @@ import {BrowserRouter as Router, Route} from "react-router-dom";
 import AllProject from './component/allProjects';
 import AllAward from './component/allAwards';
 import AllExperience from './component/allExperiences';
+import ResumePage from './component/ResumePage';
 function App() {
   return (
     <Router>
@@ -18,6 +19,7 @@ function App() {
     <Route path="/project" exact component={AllProject}/>
         <Route path="/award" exact component ={AllAward}/>
         <Route path="/experience" exact component ={AllExperience}/>
+	  <Route path= "/" exact component = {ResumePage}/>
     </Router>
 
   );
