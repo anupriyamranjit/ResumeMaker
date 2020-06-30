@@ -19,6 +19,9 @@ import {
 import axios from 'axios'
 
 function ItemCard(project){
+	const handleDelete =  (id) => {
+		project.onDelete(id);
+	}
     return(
     <Card>
         <CardContent>
@@ -27,6 +30,7 @@ function ItemCard(project){
             <h6>{project.project.firstLine}</h6>
             <h6>{project.project.secondLine}</h6>
             <h6>{project.project.thirdLine}</h6>
+	    <Button style={{color: "red"}} onClick={() => handleDelete(project.project._id)}>Delete </Button>
         </CardContent>
     </Card>
     )
@@ -39,6 +43,13 @@ function ItemCard(project){
 
 export default function AllExperiences(){
     const [experiences,setExperience] = useState([]);
+    const handleDelete = (id) => {
+		axios.delete('http://localhost:5000/experience/' + id)
+		.then(response => {
+			alert(response.data);
+			window.location.reload(false)
+		})
+	}
     useEffect(()=>{
         axios.get('http://localhost:5000/experience')
             .then(response => {
@@ -57,7 +68,7 @@ export default function AllExperiences(){
                 <Grid>
                     <Grid item md={6}>
                         {experiences.map(experience=>(
-                            <ItemCard  project={experience}/>
+                            <ItemCard onDelete={handleDelete}  project={experience}/>
                         ))}
                     </Grid>
                 </Grid>

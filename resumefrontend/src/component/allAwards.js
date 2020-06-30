@@ -23,7 +23,7 @@ import axios from 'axios'
 
 function ItemCard(project){
 	const handleDelete =  (id) => {
-		alert(id)
+		project.onDelete(id);
 	}
     return(
     <Card>
@@ -44,6 +44,14 @@ function ItemCard(project){
 
 export default function AllAwards(){
     const [awards,setAward] = useState([]);
+    const handleDelete = (id) => {
+		axios.delete('http://localhost:5000/award/' + id)
+		.then(response => {
+			alert(response.data);
+			window.location.reload(false)
+		})
+	}
+
     useEffect(()=>{
         axios.get('http://localhost:5000/award')
             .then(response => {
@@ -59,7 +67,7 @@ export default function AllAwards(){
                 <Grid>
                     <Grid item md={6}>
                         {awards.map(award =>(
-                            <ItemCard  project ={award}/>
+                            <ItemCard  onDelete={handleDelete} project ={award}/>
                         ))}
                     </Grid>
                 </Grid>

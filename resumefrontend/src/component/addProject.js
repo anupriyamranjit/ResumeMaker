@@ -36,7 +36,7 @@ export default function Project(){
       	tools:tools
       }
       axios.post('http://localhost:5000/projects/add', project)
-      .then((res) => console.log(res.data))
+      .then((res) => alert(res.data))
     }
 
 	return(
