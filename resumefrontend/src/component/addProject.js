@@ -37,6 +37,7 @@ export default function Project(){
       }
       axios.post('http://localhost:5000/projects/add', project)
       .then((res) => alert(res.data))
+      .catch((err) => alert(err))
     }
 
 	return(
@@ -50,7 +51,7 @@ export default function Project(){
 			  <br />
 			  <form onSubmit={onSubmit}>
 
-			<Grid container spacing={8}>
+			<Grid container spacing={2}>
           <Grid item md={6}>
            <TextField
                 id="outlined-name"

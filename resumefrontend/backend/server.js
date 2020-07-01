@@ -21,10 +21,12 @@ connection.once('open',() =>{
 const awardRouter = require('./routes/award');
 const experienceRouter = require('./routes/experience');
 const projectsRouter = require('./routes/projects');
+const resumeRouter = require('./routes/resume');
 
 app.use('/award',awardRouter);
 app.use('/experience',experienceRouter);
 app.use('/projects',projectsRouter);
+app.use('/resume',resumeRouter);
 
 
 app.listen(port, () => {

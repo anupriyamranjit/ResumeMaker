@@ -19,12 +19,18 @@ import {
     Stepper,
     Typography
   } from "@material-ui/core";
+  import Checkbox from '@material-ui/core/Checkbox';
 
 function ItemCard(project){
+  const handleChange= (id,checked) => {
+    alert(project.type+ ' ' +id + ' ' + checked);
+
+  }
     return(
-    <Card>
+    <Card style={{ display:'flex', justifyContent:'center' }}>
         <CardContent>
-            <h7>{project.project.name}</h7>
+            <h7>{project.project.name} </h7>
+            <Checkbox onChange={(e) => handleChange(project.project._id,e.target.checked)}/>
         </CardContent>
     </Card>
     )
@@ -34,6 +40,8 @@ export default function ResumePage(){
 	const [jobPosition,setjobPosition] = useState("Software Developer")
 	const [award,setAward] = useState([]);
 	const [project,setProject] = useState([]);
+  const [experience,setExperience] = useState([]);
+  const [name,setName] = useState("Test PDF");
 	useEffect(()=>{
         axios.get('http://localhost:5000/award')
             .then(response => {
@@ -50,13 +58,35 @@ export default function ResumePage(){
 			console.log(err);
 		});
 
+    axios.get('http://localhost:5000/experience')
+    .then(response => {
+      setExperience(response.data)
+    })
+    .catch(err => {
+      console.log(err);
+    });
+
     },[])
 
+    const handleDownload = () => {
+      generatePDF('Download')
+    }
+
+    const handleSaveDatabase = () => {
+      generatePDF('Database')
+    }
+
+    const handleGenerate = () => {
+      generatePDF('Generate')
+    }
 
 
 
 
-	const generatePDF = () => {
+
+
+
+	const generatePDF = (action) => {
 	var doc = new jsPDF();
 
 	const leftside = 15
@@ -151,12 +181,9 @@ for (i = 0; i < certs.length; i++) {
   latest_element = latest_element+ 9
 }
 doc.setFontSize(font_small);
-var experience = [
-					["Central Peel Secondary School", "Full Stack Web Developer", "Developed a responsive website using React.js, Three.js, HTML/CSS and Javascript.","Worked in an Agile team to create an volume optimization web application.","Collaborated through Git in order to ensure maximum productivity.","Utilized Firebase to host on web."],
-					["FoodPlastics Australia", "Quality Assurance Intern ", "Collaborated in a team to find any problems with a customers product.","Communicated with manager about the problem and challenges we were facing.","Created SOP and designed a process on how to ensure employees received the training."],
-					["Kumon","Math Tutor","Personally taught over 200 kids from middle school to highschool students.","Worked in a fast-paced and result driven team to provide the best experience for students.","Lead team to successfully create the curriculum and correctly present it for the students."],
-					["Spark Hackathon", "Organizer", "Organized one of Canada’s largest high-school student hackathon.","Communicated with Walmart and other retailers for fundraising.","Developed workshops and activities for the participants."]
-				]
+var experience2 = []
+{experience.map(item => (
+  experience2.push([item.name,item.position,item.firstLine,item.secondLine,item.thirdLine])))}
 
 
 var right_side = 75
@@ -165,20 +192,20 @@ doc.setFontSize(font_large);
 doc.text(right_side, 45, 'Experience');
 doc.line(right_side, 47, 150, 47)
 new_latest += 2
-for (i = 0; i < experience.length; i++) {
+for (i = 0; i < experience2.length; i++) {
   new_latest += 21
   doc.setFontSize(12);
-  doc.text(right_side,new_latest,experience[i][0]);
+  doc.text(right_side,new_latest,experience2[i][0]);
   doc.setFontSize(9);
   doc.setTextColor("Gray");
-  doc.text(right_side,new_latest+4,experience[i][1]);
+  doc.text(right_side,new_latest+4,experience2[i][1]);
   doc.setTextColor("Black");
   doc.setFontSize(9);
-  doc.text(right_side+3,new_latest+9,experience[i][2]);
+  doc.text(right_side+3,new_latest+9,experience2[i][2]);
   doc.circle(right_side+1,new_latest+9,0.5,'F');
-  doc.text(right_side+3,new_latest+14,experience[i][3]);
+  doc.text(right_side+3,new_latest+14,experience2[i][3]);
   doc.circle(right_side+1,new_latest+14,0.5,'F');
-  doc.text(right_side+3,new_latest+19,experience[i][4]);
+  doc.text(right_side+3,new_latest+19,experience2[i][4]);
   doc.circle(right_side+1,new_latest+19,0.5,'F');
   new_latest += 5
 }
@@ -229,28 +256,106 @@ for (i = 0; i < award2.length; i++) {
 }
 
 	var string = doc.output('datauristring');
+
+  if(action === 'Download'){
+    doc.save(`${name}.pdf`)
+  }
+
+  if(action === 'Database'){
+    const resume = {name:name, data_uri: string}
+    axios.post('http://localhost:5000/resume/add', resume)
+      .then((res) => alert(res.data))
+      .catch((err) => alert(err))
+  }
 	setPDF(string)
 	}
 
 	return(
-		<Grid container spacing={3}>
+		<Grid container spacing={4} style={{ display:'flex', justifyContent:'center' }}>
+
 		<Grid item xs={6}>
-                    <Grid item md={6}>
+    <TextField
+                id="outlined-name"
+                name= "Name"
+                label= "Name"
+                value={name}
+                onChange={e => setName(e.target.value)}
+                variant="outlined"
+                fullWidth
+              />
+<Card style={{ display:'flex', justifyContent:'center' }}>
+<CardContent>
+<h1 style={{ display:'flex', justifyContent:'center' }}> Award </h1>
+
                         {award.map(awards =>(
-                            <ItemCard  project ={awards}/>
+                            <ItemCard  type = 'award'project ={awards}/>
                         ))}
-                    </Grid>
-		<Button  variant="contained" color="primary"  onClick ={generatePDF}>Generate PDF</Button>
-		<br />
-		<br />
-		<Button  variant="contained" color="primary" onClick ={generatePDF}>Download PDF</Button>
-		<br />
-		<br />
-		<Button  variant="contained" color="primary" onClick ={generatePDF}>Save PDF in Database</Button>
+    
+
+    
+
+
+      
+    </CardContent>
+    </Card>
+
+    <Card style={{ display:'flex', justifyContent:'center' }}>
+<CardContent>
+<h1 style={{ display:'flex', justifyContent:'center' }}> Experience </h1>
+
+                        {experience.map(experience =>(
+                            <ItemCard  type = 'experience' project ={experience}/>
+                        ))}
+    
+
+    
+
+
+      
+    </CardContent>
+    </Card>
+
+     <Card style={{ display:'flex', justifyContent:'center' }}>
+<CardContent>
+<h1 style={{ display:'flex', justifyContent:'center' }}> Project </h1>
+
+                        {project.map(project =>(
+                            <ItemCard  type = 'project' project ={project}/>
+                        ))}
+    
+
+    
+
+
+      
+    </CardContent>
+    </Card>
+
+
+    <Card style={{ display:'flex', justifyContent:'center' }}>
+        <CardContent>
+        <Box m={2} pt={1} style={{ display:'flex', justifyContent:'center' }}>
+            <Button pt={10} variant="contained" color="primary"  onClick ={handleGenerate}>Generate PDF</Button>
+            </Box>
+            <Box m={2} pt={1} style={{ display:'flex', justifyContent:'center' }}>
+            <Button pt={1} variant="contained" color="primary" onClick ={handleDownload}>Download PDF</Button>
+            </Box>
+            <Box m={2} pt={1} style={{ display:'flex', justifyContent:'center' }}>
+            <Button pt={1} variant="contained" color="primary" onClick ={handleSaveDatabase}>Save PDF in Database</Button>
+            </Box>
+        </CardContent>
+    </Card>
+    
 		</Grid>
+
+
+
+  
 		<Grid item xs={6}>
-		<iframe src={PDF} height="200%" width="100%"></iframe>
+    <h3>{name}</h3>
+		<iframe src={PDF} height="100%" width="100%"></iframe>
 		</Grid>
+
 		</Grid>
 
 

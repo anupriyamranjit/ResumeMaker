@@ -25,15 +25,21 @@ function ItemCard(project){
 	const handleDelete =  (id) => {
 		project.onDelete(id);
 	}
+    const handleUpdate =  (id) => {
+        window.location.href="http://localhost:3000/award/" + id
+    }
     return(
+        <Grid item md={6}>
     <Card>
         <CardContent>
             <h2>{project.project.name}</h2>
             <h6>{project.project.what}</h6>
             <h6>{project.project.year}</h6>
 	    <Button style={{color: "red"}} onClick={() => handleDelete(project.project._id)}>Delete </Button>
+        <Button style={{color: "yellow"}} onClick={() => handleUpdate(project.project._id)}>Update </Button>
         </CardContent>
     </Card>
+    </Grid>
     )
 }
 
@@ -62,16 +68,16 @@ export default function AllAwards(){
             });
     },[])
     return(
-        <Card>
+    <Grid container spacing={2} style={{padding: '20px'}}>
+        <Card style={{backgroundImage: 'linear-gradient( 95deg,#1f4037 0%,#1f4037 50%,#99f2c8 100%)'}}>
             <CardContent>
-                <Grid>
-                    <Grid item md={6}>
+                <Grid container spacing={2}>
                         {awards.map(award =>(
                             <ItemCard  onDelete={handleDelete} project ={award}/>
                         ))}
-                    </Grid>
                 </Grid>
              </CardContent>
         </Card>
+        </Grid>
     )
 }

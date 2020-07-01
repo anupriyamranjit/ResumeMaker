@@ -22,6 +22,9 @@ function ItemCard(project){
 	const handleDelete =  (id) => {
 		project.onDelete(id);
 	}
+    const handleUpdate =  (id) => {
+        window.location.href="http://localhost:3000/experience/" + id
+    }
     return(
     <Card>
         <CardContent>
@@ -31,6 +34,7 @@ function ItemCard(project){
             <h6>{project.project.secondLine}</h6>
             <h6>{project.project.thirdLine}</h6>
 	    <Button style={{color: "red"}} onClick={() => handleDelete(project.project._id)}>Delete </Button>
+        <Button style={{color: "yellow"}} onClick={() => handleUpdate(project.project._id)}>Update </Button>
         </CardContent>
     </Card>
     )
@@ -65,7 +69,7 @@ export default function AllExperiences(){
     return(
         <Card>
             <CardContent>
-                <Grid>
+                <Grid container spacing={2}>
                     <Grid item md={6}>
                         {experiences.map(experience=>(
                             <ItemCard onDelete={handleDelete}  project={experience}/>

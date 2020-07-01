@@ -1,4 +1,3 @@
-
 const router = require('express').Router();
 let Projects = require('../model/projects.model');
 

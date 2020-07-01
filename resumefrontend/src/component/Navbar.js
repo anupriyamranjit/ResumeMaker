@@ -20,7 +20,7 @@ export default function Navbar() {
                 <Link to="/addaward" className="nav-link">Add Award</Link>
                 </li>
                 <li>
-                <Link to="/project" className="nav-link">All Projects</Link>
+                <Link to="/projects" className="nav-link">All Projects</Link>
                 </li>
                 
                 <li>
