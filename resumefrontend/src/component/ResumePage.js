@@ -21,11 +21,96 @@ import {
   } from "@material-ui/core";
   import Checkbox from '@material-ui/core/Checkbox';
 
-function ItemCard(project){
-  const handleChange= (id,checked) => {
-    alert(project.type+ ' ' +id + ' ' + checked);
 
+export default function ResumePage(){
+	const [PDF,setPDF] = useState('');
+	const [jobPosition,setjobPosition] = useState("Software Developer")
+	const [award,setAward] = useState([]);
+	const [project,setProject] = useState([]);
+  const [experience,setExperience] = useState([]);
+  const [projectList,setProjectList] = useState([]);
+  const [experienceList,setExperienceList] = useState([]);
+  const [awardList,setAwardList] = useState([]);
+  const [name,setName] = useState("");
+
+
+  function ItemCard(project){
+    const getCheck = (id) => {
+      if(project.type === 'project'){
+         if(projectList.indexOf(id) === -1){
+          return false
+        } else {
+          return true
+        }
+      }
+      if(project.type === 'award'){
+         if(awardList.indexOf(id) === -1){
+          return false
+        } else {
+          return true
+        }
+      }
+      if(project.type === 'experience'){
+        if(experienceList.indexOf(id) === -1){
+          return false
+        } else {
+          return true
+        }
+      }
+
+
+    }
+
+  const handleChange= (id,checked) => {
+    if(project.type === 'project'){
+      let itemList = projectList
+    
+    if(checked === false){
+      const index = projectList.indexOf(id)
+      if(index > -1){
+        itemList.splice(index, 1)
+      } 
+    } else {
+        itemList.push(id)
+      }
+      setProjectList(itemList)
+      
+
+    }
+
+    if(project.type === 'award'){
+      let itemList = awardList
+    
+    if(checked === false){
+      const index = awardList.indexOf(id)
+      if(index > -1){
+        itemList.splice(index, 1)
+      } 
+    } else {
+        itemList.push(id)
+      }
+      setAwardList(itemList)
+      
+
+    }
+
+    if(project.type === 'experience'){
+      let itemList = experienceList
+    
+    if(checked === false){
+      const index = experienceList.indexOf(id)
+      if(index > -1){
+        itemList.splice(index, 1)
+      } 
+    } else {
+        itemList.push(id)
+      }
+      setExperienceList(itemList)
+ 
+
+    }
   }
+    
     return(
     <Card style={{ display:'flex', justifyContent:'center' }}>
         <CardContent>
@@ -35,13 +120,7 @@ function ItemCard(project){
     </Card>
     )
 }
-export default function ResumePage(){
-	const [PDF,setPDF] = useState('');
-	const [jobPosition,setjobPosition] = useState("Software Developer")
-	const [award,setAward] = useState([]);
-	const [project,setProject] = useState([]);
-  const [experience,setExperience] = useState([]);
-  const [name,setName] = useState("Test PDF");
+
 	useEffect(()=>{
         axios.get('http://localhost:5000/award')
             .then(response => {
@@ -182,8 +261,13 @@ for (i = 0; i < certs.length; i++) {
 }
 doc.setFontSize(font_small);
 var experience2 = []
-{experience.map(item => (
-  experience2.push([item.name,item.position,item.firstLine,item.secondLine,item.thirdLine])))}
+
+for(i = 0; i < experience.length; i++){
+  if(experienceList.indexOf(experience[i]._id) > -1){
+    experience2.push([experience[i].name,experience[i].position,experience[i].firstLine,experience[i].secondLine,experience[i].thirdLine])
+  }
+}
+
 
 
 var right_side = 75
@@ -216,8 +300,13 @@ doc.line(right_side, new_latest+2, 150, new_latest+2)
 new_latest += 2
 				
 var project2 = []
-{project.map(item => (
-	project2.push([item.name,item.position,item.what,item.tools])))}
+
+for(i = 0; i < project.length; i++){
+  if(projectList.indexOf(project[i]._id) > -1){
+    project2.push([project[i].name,project[i].position,project[i].what,project[i].tools])
+  }
+}
+
 new_latest -= 13
 for (i = 0; i < project2.length; i++) {
   new_latest += 18
@@ -236,9 +325,12 @@ for (i = 0; i < project2.length; i++) {
 }
 
 var award2 = []
-{award.map(award => (
-	award2.push([award.name,award.what])
-))}
+
+for(i = 0; i < award.length; i++){
+  if(awardList.indexOf(award[i]._id) > -1){
+    award2.push([award[i].name,award[i].what,award[i].year])
+  }
+}
 
 new_latest += 22
 doc.setFontSize(font_large);
@@ -267,6 +359,9 @@ for (i = 0; i < award2.length; i++) {
       .then((res) => alert(res.data))
       .catch((err) => alert(err))
   }
+  setExperienceList([])
+  setAwardList([])
+  setProjectList([])
 	setPDF(string)
 	}
 
