@@ -23,10 +23,10 @@ const experienceRouter = require('./routes/experience');
 const projectsRouter = require('./routes/projects');
 const resumeRouter = require('./routes/resume');
 
-app.use('/award',awardRouter);
-app.use('/experience',experienceRouter);
-app.use('/projects',projectsRouter);
-app.use('/resume',resumeRouter);
+app.use('/api/award',awardRouter);
+app.use('/api/experience',experienceRouter);
+app.use('/api/projects',projectsRouter);
+app.use('/api/resume',resumeRouter);
 
 
 app.listen(port, () => {

@@ -29,7 +29,7 @@ const [thirdLine,setthirdLine] = useState("");
 
 
 useEffect(() => {
-	axios.get('http://localhost:5000/experience/' +`${params.id}`)
+	axios.get('/api/experience/' +`${params.id}`)
 	.then(response => {
         setName(response.data.name)
         setPosition(response.data.position)
@@ -54,7 +54,7 @@ const onSubmit = e =>{
         secondLine : secondLine,
         thirdLine : thirdLine
       }
-      axios.post('http://localhost:5000/experience/update/'+`${params.id}`, updatedExperience)
+      axios.post('/api/experience/update/'+`${params.id}`, updatedExperience)
       .then(res => {
         alert(res.data) 
         window.location.href="http://localhost:3000/experience"})

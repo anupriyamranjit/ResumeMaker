@@ -49,14 +49,14 @@ function ItemCard(project){
 export default function AllProjects(){
     const [projects,setProjects] = useState([]);
     const handleDelete = (id) => {
-		axios.delete('http://localhost:5000/projects/' + id)
+		axios.delete('/api/projects/' + id)
 		.then(response => {
 			alert(response.data);
 			window.location.reload(false)
 		})
 	}
     useEffect(()=>{
-        axios.get('http://localhost:5000/projects')
+        axios.get('/api/projects')
             .then(response => {
                 setProjects(response.data)
             })

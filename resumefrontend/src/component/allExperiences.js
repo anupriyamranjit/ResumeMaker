@@ -48,14 +48,14 @@ function ItemCard(project){
 export default function AllExperiences(){
     const [experiences,setExperience] = useState([]);
     const handleDelete = (id) => {
-		axios.delete('http://localhost:5000/experience/' + id)
+		axios.delete('/api/experience/' + id)
 		.then(response => {
 			alert(response.data);
 			window.location.reload(false)
 		})
 	}
     useEffect(()=>{
-        axios.get('http://localhost:5000/experience')
+        axios.get('/api/experience')
             .then(response => {
                 setExperience(response.data)
             })

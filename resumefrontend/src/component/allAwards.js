@@ -51,7 +51,7 @@ function ItemCard(project){
 export default function AllAwards(){
     const [awards,setAward] = useState([]);
     const handleDelete = (id) => {
-		axios.delete('http://localhost:5000/award/' + id)
+		axios.delete('/api/award/' + id)
 		.then(response => {
 			alert(response.data);
 			window.location.reload(false)
@@ -59,7 +59,7 @@ export default function AllAwards(){
 	}
 
     useEffect(()=>{
-        axios.get('http://localhost:5000/award')
+        axios.get('/api/award')
             .then(response => {
                 setAward(response.data)
             })

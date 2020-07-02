@@ -33,7 +33,7 @@ export default function Project(){
       	what:what,
       	year:year
       }
-      axios.post('http://localhost:5000/award/add', award)
+      axios.post('/api/award/add', award)
       .then((res) => alert(res.data))
     }
 

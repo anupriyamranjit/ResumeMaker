@@ -31,27 +31,29 @@ export default function ResumePage(){
   const [projectList,setProjectList] = useState([]);
   const [experienceList,setExperienceList] = useState([]);
   const [awardList,setAwardList] = useState([]);
-  const [name,setName] = useState("");
+  const [name,setName] = useState("Anupriyam Resume");
+  const [lastResume,setlastResume] = useState("");
 
-
-  function ItemCard(project){
-    const getCheck = (id) => {
-      if(project.type === 'project'){
-         if(projectList.indexOf(id) === -1){
+  const getCheck = (id, type) => {
+      if(type === 'project'){
+        let itemList = projectList
+         if(itemList.indexOf(id) > -1){
+          return true
+        } else {
+          return false
+        }
+      }
+      else if(type === 'award'){
+        let itemList = awardList
+         if(itemList.indexOf(id) === -1){
           return false
         } else {
           return true
         }
       }
-      if(project.type === 'award'){
-         if(awardList.indexOf(id) === -1){
-          return false
-        } else {
-          return true
-        }
-      }
-      if(project.type === 'experience'){
-        if(experienceList.indexOf(id) === -1){
+      else {
+        let itemList = experienceList
+        if(itemList.indexOf(id) === -1){
           return false
         } else {
           return true
@@ -60,6 +62,11 @@ export default function ResumePage(){
 
 
     }
+
+
+  function ItemCard(project){
+
+    
 
   const handleChange= (id,checked) => {
     if(project.type === 'project'){
@@ -115,21 +122,21 @@ export default function ResumePage(){
     <Card style={{ display:'flex', justifyContent:'center' }}>
         <CardContent>
             <h7>{project.project.name} </h7>
-            <Checkbox onChange={(e) => handleChange(project.project._id,e.target.checked)}/>
+            <Checkbox  onChange={(e) => handleChange(project.project._id,e.target.checked)}/>
         </CardContent>
     </Card>
     )
 }
 
 	useEffect(()=>{
-        axios.get('http://localhost:5000/award')
+        axios.get('/api/award')
             .then(response => {
                 setAward(response.data)
             })
             .catch(err => {
                 console.log(err);
             });
-	axios.get('http://localhost:5000/projects')
+	axios.get('/api/projects')
 		.then(response => {
 			setProject(response.data)
 		})
@@ -137,7 +144,7 @@ export default function ResumePage(){
 			console.log(err);
 		});
 
-    axios.get('http://localhost:5000/experience')
+    axios.get('/api/experience')
     .then(response => {
       setExperience(response.data)
     })
@@ -354,15 +361,19 @@ for (i = 0; i < award2.length; i++) {
   }
 
   if(action === 'Database'){
-    const resume = {name:name, data_uri: string}
+    const resume = {name:name, data_uri: lastResume}
     axios.post('http://localhost:5000/resume/add', resume)
-      .then((res) => alert(res.data))
+      .then((res) => {
+        alert(res.data)
+        setName('')
+      })
       .catch((err) => alert(err))
   }
   setExperienceList([])
   setAwardList([])
   setProjectList([])
 	setPDF(string)
+  setlastResume(string)
 	}
 
 	return(

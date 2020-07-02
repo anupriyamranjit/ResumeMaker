@@ -29,7 +29,7 @@ const [tools,setTools] = useState("");
 
 
 useEffect(() => {
-	axios.get('http://localhost:5000/projects/' +`${params.id}`)
+	axios.get('/api/projects/' +`${params.id}`)
 	.then(response => {
         setName(response.data.name)
         setWhat(response.data.what)
@@ -52,7 +52,7 @@ const onSubmit = e =>{
         position : position,
         tools : tools
       }
-      axios.post('http://localhost:5000/projects/update/'+`${params.id}`, updatedProject)
+      axios.post('/api/projects/update/'+`${params.id}`, updatedProject)
       .then(res => {
         alert(res.data) 
         window.location.href="http://localhost:3000/projects"})

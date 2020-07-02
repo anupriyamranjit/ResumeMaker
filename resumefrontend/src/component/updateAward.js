@@ -28,7 +28,7 @@ const [year,setYear] = useState("");
 
 
 useEffect(() => {
-	axios.get('http://localhost:5000/award/' +`${params.id}`)
+	axios.get('/api/award/' +`${params.id}`)
 	.then(response => {
         setName(response.data.name)
         setWhat(response.data.what)
@@ -49,7 +49,7 @@ const onSubmit = e =>{
         what : what,
         year : year
       }
-      axios.post('http://localhost:5000/award/update/'+`${params.id}`, updatedAward)
+      axios.post('/api/award/update/'+`${params.id}`, updatedAward)
       .then(res => {
         alert(res.data) 
         window.location.href="http://localhost:3000/award"})
