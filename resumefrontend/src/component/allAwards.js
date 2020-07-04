@@ -5,6 +5,7 @@ import {
     Breadcrumbs as MuiBreadcrumbs,
     Button,
     Box,
+    Fab,
     Card,
     CardContent,
     Divider,
@@ -13,11 +14,12 @@ import {
     Input,
     InputLabel,
     MenuItem,
-    Link,
     TextField,
     Typography
   } from "@material-ui/core";
 import axios from 'axios'
+import AddIcon from '@material-ui/icons/Add';
+import {Link} from "react-router-dom";
 
 
 
@@ -78,6 +80,11 @@ export default function AllAwards(){
                 </Grid>
              </CardContent>
         </Card>
+        <Link to="/addaward">
+        <Fab style={{float:"right"}}color="primary" aria-label="add">
+        <AddIcon/>
+        </Fab>
+        </Link>
         </Grid>
     )
 }

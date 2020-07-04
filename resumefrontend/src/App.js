@@ -11,12 +11,16 @@ import ResumePage from './component/ResumePage';
 import UpdateExperience from './component/updateExperience';
 import UpdateAward from './component/updateAward';
 import UpdateProject from './component/updateProject';
+import Framework from './component/addFramework';
+import Languages from './component/addLanguages';
 function App() {
   return (
     <Router>
       <Navbar />
       <br />
       <Route path="/addproject" exact component={Project} />
+      <Route path="/addframework" exact component={Framework} />
+      <Route path="/addlanguages" exact component={Languages} />
       <Route path="/addaward" exact component={Award} />
       <Route path="/addexperience" exact component={Experience} />
     <Route path="/projects" exact component={AllProject}/>

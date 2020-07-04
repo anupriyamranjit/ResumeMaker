@@ -22,11 +22,15 @@ const awardRouter = require('./routes/award');
 const experienceRouter = require('./routes/experience');
 const projectsRouter = require('./routes/projects');
 const resumeRouter = require('./routes/resume');
+const languagesRouter = require('./routes/languages');
+const frameworkRouter = require('./routes/framework');
 
 app.use('/api/award',awardRouter);
 app.use('/api/experience',experienceRouter);
 app.use('/api/projects',projectsRouter);
 app.use('/api/resume',resumeRouter);
+app.use('/api/languages',languagesRouter);
+app.use('/api/framework',frameworkRouter);
 
 
 app.listen(port, () => {

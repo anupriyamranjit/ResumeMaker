@@ -10,15 +10,14 @@ export default function Navbar() {
                 <li className="nav-item">
                 <Link to="/" className="nav-link">Resume</Link>
                 </li>
+              
                 <li className="nav-item">
-                <Link to="/addproject" className="nav-link">Add Project</Link>
+                <Link to="/addframework" className="nav-link">Add Frameworks</Link>
                 </li>
                 <li className="nav-item">
-                <Link to="/addexperience" className="nav-link">Add Experience</Link>
+                <Link to="/addlanguages" className="nav-link">Add Languages</Link>
                 </li>
-                <li className="nav-item">
-                <Link to="/addaward" className="nav-link">Add Award</Link>
-                </li>
+                
                 <li>
                 <Link to="/projects" className="nav-link">All Projects</Link>
                 </li>

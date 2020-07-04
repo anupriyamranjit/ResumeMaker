@@ -5,6 +5,7 @@ import {
     Button,
     Box,
     Card,
+    Fab,
     CardContent,
     Divider,
     FormControl as MuiFormControl,
@@ -12,11 +13,12 @@ import {
     Input,
     InputLabel,
     MenuItem,
-    Link,
     TextField,
     Typography
   } from "@material-ui/core";
 import axios from 'axios'
+import {Link} from "react-router-dom"
+import AddIcon from '@material-ui/icons/Add';
 
 
 
@@ -77,6 +79,11 @@ export default function AllProjects(){
                         ))}
                     </Grid>
                 </Grid>
+                <Link to="/addproject">
+                <Fab style={{float:"right"}}color="primary" aria-label="add">
+        <AddIcon/>
+        </Fab>
+        </Link>
              </CardContent>
         </Card>
     )

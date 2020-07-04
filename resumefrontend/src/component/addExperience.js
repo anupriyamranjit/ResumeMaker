@@ -37,7 +37,7 @@ export default function Project(){
         secondLine:secondLine,
         thirdLine:thirdLine,
       }
-      axios.post('http://localhost:5000/api/experience/add', experience)
+      axios.post('/api/experience/add', experience)
       .then((res) => alert(res.data))
     }
 

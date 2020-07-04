@@ -16,10 +16,14 @@ import {
     MenuItem,
     Link,
     TextField,
-    Stepper,
+    Collapse,
     Typography
   } from "@material-ui/core";
   import Checkbox from '@material-ui/core/Checkbox';
+  import IconButton from '@material-ui/core/IconButton';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import Stepper from './stepper';
+
 
 
 export default function ResumePage(){
@@ -31,20 +35,46 @@ export default function ResumePage(){
   const [projectList,setProjectList] = useState([]);
   const [experienceList,setExperienceList] = useState([]);
   const [awardList,setAwardList] = useState([]);
+  const [languages,setLanguages] = useState([]);
+  const [frameworks,setFramework] = useState([]);
+  const [languageList,setLanguagesList] = useState([]);
+  const [frameworkList,setFrameworkList] = useState([]);
   const [name,setName] = useState("Anupriyam Resume");
   const [lastResume,setlastResume] = useState("");
+  const [expanded, setExpanded] = React.useState(false);
+
+
+  const handleExpandClick = () => {
+    setExpanded(!expanded);
+  };
 
   const getCheck = (id, type) => {
       if(type === 'project'){
         let itemList = projectList
-         if(itemList.indexOf(id) > -1){
-          return true
-        } else {
+         if(itemList.indexOf(id) === -1){
           return false
+        } else {
+          return true
         }
       }
       else if(type === 'award'){
         let itemList = awardList
+         if(itemList.indexOf(id) === -1){
+          return false
+        } else {
+          return true
+        }
+      }
+      else if(type === 'framework'){
+        let itemList = frameworkList
+         if(itemList.indexOf(id) === -1){
+          return false
+        } else {
+          return true
+        }
+      }
+      else if(type === 'language'){
+        let itemList = languageList
          if(itemList.indexOf(id) === -1){
           return false
         } else {
@@ -66,7 +96,6 @@ export default function ResumePage(){
 
   function ItemCard(project){
 
-    
 
   const handleChange= (id,checked) => {
     if(project.type === 'project'){
@@ -101,6 +130,38 @@ export default function ResumePage(){
 
     }
 
+    if(project.type === 'framework'){
+      let itemList = frameworkList
+    
+    if(checked === false){
+      const index = frameworkList.indexOf(id)
+      if(index > -1){
+        itemList.splice(index, 1)
+      } 
+    } else {
+        itemList.push(id)
+      }
+      setFrameworkList(itemList)
+      
+
+    }
+
+    if(project.type === 'language'){
+      let itemList = languageList
+    
+    if(checked === false){
+      const index = languageList.indexOf(id)
+      if(index > -1){
+        itemList.splice(index, 1)
+      } 
+    } else {
+        itemList.push(id)
+      }
+      setLanguagesList(itemList)
+      
+
+    }
+
     if(project.type === 'experience'){
       let itemList = experienceList
     
@@ -122,7 +183,7 @@ export default function ResumePage(){
     <Card style={{ display:'flex', justifyContent:'center' }}>
         <CardContent>
             <h7>{project.project.name} </h7>
-            <Checkbox  onChange={(e) => handleChange(project.project._id,e.target.checked)}/>
+            <Checkbox defaultChecked={project.check ? true : false} onChange={(e) => handleChange(project.project._id,e.target.checked)}/>
         </CardContent>
     </Card>
     )
@@ -147,6 +208,22 @@ export default function ResumePage(){
     axios.get('/api/experience')
     .then(response => {
       setExperience(response.data)
+    })
+    .catch(err => {
+      console.log(err);
+    });
+
+    axios.get('/api/framework')
+    .then(response => {
+      setFramework(response.data)
+    })
+    .catch(err => {
+      console.log(err);
+    });
+
+    axios.get('/api/languages')
+    .then(response => {
+      setLanguages(response.data)
     })
     .catch(err => {
       console.log(err);
@@ -210,8 +287,22 @@ export default function ResumePage(){
   	doc.text(leftside,52+ 5*i,contact_info[i]);
   	latest_element = 52+ 5*i;
 	}
-	var p_lang = ["Python","Javascript","C","Latex","HTML","CSS","SQL"]
-	var p_frame = ["Django","React","Firebase", "Heroku", "Bootstraps", "Git", "BeautifulSoup","Selenium","Pandas","Mathplotlib","Seaborn", "sklearn","NLTK" ]
+  //["Python","Javascript","C","Latex","HTML","CSS","SQL"]
+	var p_lang = []
+
+  for(i = 0; i < languages.length; i++){
+  if(languageList.indexOf(languages[i]._id) > -1){
+    p_lang.push(languages[i].name)
+  }
+}
+	var p_frame = []
+
+  for(i = 0; i < frameworks.length; i++){
+  if(frameworkList.indexOf(frameworks[i]._id) > -1){
+    p_frame.push(frameworks[i].name)
+  }
+}
+  //["Django","React","Firebase", "Heroku", "Bootstraps", "Git", "BeautifulSoup","Selenium","Pandas","Mathplotlib","Seaborn", "sklearn","NLTK" ]
 doc.setFontSize(font_large);
 doc.text(leftside, latest_element + 15, 'Skills');
 doc.line(leftside, latest_element + 17, 65, latest_element + 17, "DF");
@@ -369,12 +460,113 @@ for (i = 0; i < award2.length; i++) {
       })
       .catch((err) => alert(err))
   }
-  setExperienceList([])
-  setAwardList([])
-  setProjectList([])
 	setPDF(string)
   setlastResume(string)
 	}
+
+  function MakeExperience(){
+    return(
+    <Card style={{ display:'flex', justifyContent:'center' }}>
+<CardContent>
+<h1 style={{ display:'flex', justifyContent:'center' }}> Experience </h1>
+
+                        {experience.map(experience =>(
+                            <ItemCard check={getCheck(experience._id,'experience')} type = 'experience' project ={experience}/>
+                        ))}
+
+      
+    </CardContent>
+    </Card>
+    )
+
+
+  }
+
+
+  function MakeAward(){
+    return(
+    <Card style={{ display:'flex', justifyContent:'center' }}>
+<CardContent>
+<h1 style={{ display:'flex', justifyContent:'center' }}> Award </h1>
+
+                        {award.map(awards =>(
+                            <ItemCard  check={getCheck(awards._id,'award')} type = 'award'project ={awards}/>
+                        ))}
+
+      
+    </CardContent>
+    </Card>
+    )
+
+
+  }
+
+  function MakeFramework(){
+    return(
+    <Card style={{ display:'flex', justifyContent:'center' }}>
+<CardContent>
+<h1 style={{ display:'flex', justifyContent:'center' }}> Frameworks </h1>
+
+                        {frameworks.map(framework =>(
+                            <ItemCard check={getCheck(framework._id,'framework')} type = 'framework' project ={framework}/>
+                        ))}
+    
+
+    
+
+
+      
+    </CardContent>
+    </Card>
+    )
+
+
+  }
+
+  function MakeLanguages(){
+    return(
+    <Card style={{ display:'flex', justifyContent:'center' }}>
+<CardContent>
+<h1 style={{ display:'flex', justifyContent:'center' }}> Languages </h1>
+
+                        {languages.map(language =>(
+                            <ItemCard check={getCheck(language._id,'language')} type = 'language' project ={language}/>
+                        ))}
+    
+
+    
+
+
+      
+    </CardContent>
+    </Card>
+    )
+
+
+  }
+
+  function MakeProject(){
+    return(
+    <Card style={{ display:'flex', justifyContent:'center' }}>
+<CardContent>
+<h1 style={{ display:'flex', justifyContent:'center' }}> Project </h1>
+
+                        {project.map(project =>(
+                            <ItemCard check={getCheck(project._id,'project')} type = 'project' project ={project}/>
+                        ))}
+    
+
+    
+
+
+      
+    </CardContent>
+    </Card>
+    )
+
+
+  }
+
 
 	return(
 		<Grid container spacing={4} style={{ display:'flex', justifyContent:'center' }}>
@@ -389,53 +581,29 @@ for (i = 0; i < award2.length; i++) {
                 variant="outlined"
                 fullWidth
               />
-<Card style={{ display:'flex', justifyContent:'center' }}>
-<CardContent>
-<h1 style={{ display:'flex', justifyContent:'center' }}> Award </h1>
+             <Card >
+<CardContent> 
 
-                        {award.map(awards =>(
-                            <ItemCard  type = 'award'project ={awards}/>
-                        ))}
-    
+<Stepper one={<MakeExperience/>} two={<MakeAward />} three={<MakeFramework />} four={<MakeLanguages />} five={<MakeProject />}/>
+
 
     
 
 
-      
+
     </CardContent>
     </Card>
 
-    <Card style={{ display:'flex', justifyContent:'center' }}>
-<CardContent>
-<h1 style={{ display:'flex', justifyContent:'center' }}> Experience </h1>
-
-                        {experience.map(experience =>(
-                            <ItemCard  type = 'experience' project ={experience}/>
-                        ))}
     
+
+     
+
 
     
 
 
-      
-    </CardContent>
-    </Card>
-
-     <Card style={{ display:'flex', justifyContent:'center' }}>
-<CardContent>
-<h1 style={{ display:'flex', justifyContent:'center' }}> Project </h1>
-
-                        {project.map(project =>(
-                            <ItemCard  type = 'project' project ={project}/>
-                        ))}
-    
 
     
-
-
-      
-    </CardContent>
-    </Card>
 
 
     <Card style={{ display:'flex', justifyContent:'center' }}>
