@@ -17,6 +17,10 @@ export default function Navbar() {
                 <li className="nav-item">
                 <Link to="/addlanguages" className="nav-link">Add Languages</Link>
                 </li>
+
+                <li className="nav-item">
+                <Link to="/resume" className="nav-link">Old Resumes</Link>
+                </li>
                 
                 <li>
                 <Link to="/projects" className="nav-link">All Projects</Link>

@@ -2,7 +2,6 @@ import React,{useState,useEffect} from 'react';
 import jsPDF from 'jspdf';
 import axios from 'axios';
 import {
-    Avatar,
     Breadcrumbs as MuiBreadcrumbs,
     Button,
     Box,
@@ -37,8 +36,25 @@ export default function ResumePage(){
   const [awardList,setAwardList] = useState([]);
   const [languages,setLanguages] = useState([]);
   const [frameworks,setFramework] = useState([]);
-  const [languageList,setLanguagesList] = useState([]);
-  const [frameworkList,setFrameworkList] = useState([]);
+  const [languageList,setLanguagesList] = useState([
+    "5f0009046671b9e5a4e70c54",
+    "5f00144c6671b9e5a4e70c5f",
+    "5f0014526671b9e5a4e70c60",
+    "5f00145a6671b9e5a4e70c61",
+    "5f00145e6671b9e5a4e70c62",
+    ]);
+  const [frameworkList,setFrameworkList] = useState([
+    "5f00090c6671b9e5a4e70c55",
+    "5f0009156671b9e5a4e70c56",
+    "5f00091c6671b9e5a4e70c57",
+    "5f00092a6671b9e5a4e70c58",
+    "5f000d646671b9e5a4e70c59",
+    "5f000d7b6671b9e5a4e70c5a",
+    "5f000d836671b9e5a4e70c5b",
+    "5f000d8a6671b9e5a4e70c5c",
+    "5f000d936671b9e5a4e70c5d",
+    "5f000da26671b9e5a4e70c5e",
+    ]);
   const [name,setName] = useState("Anupriyam Resume");
   const [lastResume,setlastResume] = useState("");
   const [expanded, setExpanded] = React.useState(false);
@@ -453,7 +469,7 @@ for (i = 0; i < award2.length; i++) {
 
   if(action === 'Database'){
     const resume = {name:name, data_uri: lastResume}
-    axios.post('http://localhost:5000/resume/add', resume)
+    axios.post('http://localhost:5000/api/resume/add', resume)
       .then((res) => {
         alert(res.data)
         setName('')
@@ -581,6 +597,7 @@ for (i = 0; i < award2.length; i++) {
                 variant="outlined"
                 fullWidth
               />
+              
              <Card >
 <CardContent> 
 

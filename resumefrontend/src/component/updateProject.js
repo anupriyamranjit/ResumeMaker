@@ -81,7 +81,7 @@ const onSubmit = e =>{
           label="Position"
           value={position}
           defaultValue={position}
-          onChange= {e => setWhat(e.target.value)}
+          onChange= {e => setPosition(e.target.value)}
           variant="outlined"
           fullWidth
         />
@@ -103,7 +103,7 @@ const onSubmit = e =>{
 
          <TextField
           id="standard-helperText"
-          label="Year"
+          label="Tools"
           value={tools}
           defaultValue={tools}
           onChange= {e => setTools(e.target.value)}

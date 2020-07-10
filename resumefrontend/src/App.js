@@ -13,6 +13,7 @@ import UpdateAward from './component/updateAward';
 import UpdateProject from './component/updateProject';
 import Framework from './component/addFramework';
 import Languages from './component/addLanguages';
+import Resume from './component/ResumeViewer';
 function App() {
   return (
     <Router>
@@ -23,6 +24,7 @@ function App() {
       <Route path="/addlanguages" exact component={Languages} />
       <Route path="/addaward" exact component={Award} />
       <Route path="/addexperience" exact component={Experience} />
+      <Route path="/resume" exact component={Resume} />
     <Route path="/projects" exact component={AllProject}/>
         <Route path="/award" exact component ={AllAward}/>
         <Route path="/experience" exact component ={AllExperience}/>
