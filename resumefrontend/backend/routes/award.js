@@ -12,6 +12,7 @@ router.route('/add').post((req,res) => {
 	const name = req.body.name;
 	const what = req.body.what;
 	const year = Number(req.body.year);
+	
 	const newAward = new Award({name,what,year});
 
 	newAward.save()
