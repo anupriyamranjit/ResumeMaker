@@ -1,6 +1,7 @@
 {
   "name": "resumefrontend",
   "version": "0.1.0",
+  "homepage": ".",
   "proxy": "https://thawing-spire-48569.herokuapp.com",
   "private": true,
   "dependencies": {
